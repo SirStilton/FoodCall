@@ -1,0 +1,1 @@
+export default function Home(){return <main className="entry"><img src="/assets/logo.png" alt="FoodCall"/><h1>Food Call</h1><p>Wähle aus, welches Gerät du einrichtest.</p><div><a href="/caller">Caller</a><a href="/client">Client</a></div></main>}

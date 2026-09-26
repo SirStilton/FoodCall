@@ -1,0 +1,1 @@
+ALTER TABLE `devices` ADD `fcm_token` text;

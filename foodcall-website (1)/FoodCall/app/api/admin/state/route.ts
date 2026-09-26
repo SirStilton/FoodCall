@@ -1,0 +1,3 @@
+import {db,validFamily,reply} from '../../shared';
+import {isAdmin,forbidden} from '../auth';
+export async function GET(req:Request){if(!await isAdmin(req))return forbidden();const family=new URL(req.url).searchParams.get('family');if(!validFamily(family))return reply({error:'Ungültige Familie'},400);try{const count=await db().prepare('SELECT COUNT(*) AS n FROM devices WHERE family=? AND last_seen>?').bind(family,Date.now()-30000).first<{n:number}>();const logs=(await db().prepare('SELECT id,kind,detail,created FROM events WHERE family=? ORDER BY id DESC LIMIT 200').bind(family).all()).results;return reply({count:count?.n||0,logs})}catch{return reply({error:'Verbindung vorübergehend nicht verfügbar'},503)}}
